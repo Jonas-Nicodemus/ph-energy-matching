@@ -1,0 +1,20 @@
+name = "EnergyMatching"
+uuid = "52e3087c-c8cd-41b6-a904-8a8eaeaac84c"
+authors = ["Jonas Nicodemus <jonas.nicodemus@icloud.com> and contributors"]
+version = "1.0.0-DEV"
+
+[deps]
+COSMO = "1e616198-aa4e-51ec-90a2-23f7fbd31d8d"
+ControlSystems = "a6e380b2-a6ca-5380-bf3e-84a91bcd477e"
+JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
+LineSearches = "d3d80556-e9d4-5f37-9878-2ab0fcc64255"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+MatrixEquations = "99c1a7ee-ab34-5fd5-8076-27c950a045f4"
+Optim = "429524aa-4258-5aef-a3af-852621145aeb"
+PortHamiltonianSystems = "6ff9205f-2186-4c35-b9d7-b7843b877754"
+QuadraticOutputSystems = "7e166fd4-1274-4fbf-8c8d-3f6046b124b3"
+SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[compat]
+julia = "1"

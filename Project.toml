@@ -1,0 +1,24 @@
+name = "ph-energy-matching"
+authors = ["Jonas Nicodemus <jonas.nicodemus@icloud.com> and contributors"]
+version = "1.0.0"
+
+[deps]
+ColorBrewer = "a2cac450-b92f-5266-8821-25eda20663c8"
+ControlSystems = "a6e380b2-a6ca-5380-bf3e-84a91bcd477e"
+DrWatson = "634d3b9d-ee7a-5ddf-bec9-22491ea816e1"
+EnergyMatching = "52e3087c-c8cd-41b6-a904-8a8eaeaac84c"
+LaTeXStrings = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+PGFPlotsX = "8314cec4-20b6-5062-9cdb-752b83310925"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+PortHamiltonianBenchmarkSystems = "a30e1a9a-10b8-4bba-9e65-ab6e41f71348"
+PortHamiltonianModelReduction = "b1e0afa7-a251-494f-bb10-70a9ac2e613c"
+PortHamiltonianSystems = "6ff9205f-2186-4c35-b9d7-b7843b877754"
+ProgressMeter = "92933f4c-e287-5a05-a399-4b506db050ca"
+QuadraticOutputSystems = "7e166fd4-1274-4fbf-8c8d-3f6046b124b3"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[compat]
+DrWatson = "2.12.7"
+julia = "1.9.3"

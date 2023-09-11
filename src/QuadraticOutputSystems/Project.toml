@@ -1,0 +1,12 @@
+name = "QuadraticOutputSystems"
+uuid = "7e166fd4-1274-4fbf-8c8d-3f6046b124b3"
+authors = ["Jonas Nicodemus <jonas.nicodemus@icloud.com> and contributors"]
+version = "1.0.0-DEV"
+
+[deps]
+ControlSystems = "a6e380b2-a6ca-5380-bf3e-84a91bcd477e"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+MatrixEquations = "99c1a7ee-ab34-5fd5-8076-27c950a045f4"
+
+[compat]
+julia = "1"
