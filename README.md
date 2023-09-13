@@ -1,15 +1,19 @@
-# Energy matching in reduced passive and port-Hamiltonian systems
+[![arXiv][arxiv-shield]][arxiv-url]
+[![DOI][doi-shield]][doi-url]
+[![Documentation Status][docs-shield]][docs-url]
+[![MIT License][license-shield]][license-url]
 
-This repository contains the code for the paper Energy matching in reduced passive and port-Hamiltonian systems.
+# [Energy matching in reduced passive and port-Hamiltonian systems][arxiv-url]
+This repository contains the code for the paper [Energy matching in reduced passive and port-Hamiltonian systems][arxiv-url].
 The goal is to find low-dimensional port-Hamiltonian (pH) models that not only match the input-output dynamic of a full order model (FOM), but also its energy (Hamiltonian) trajectory.
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
   <ol>
-    <!-- <li>
+    <li>
       <a href="#citing">Citing</a>
-    </li> -->
+    </li>
     <li>
       <a href="#installation">Installation</a>
     </li>
@@ -18,6 +22,14 @@ The goal is to find low-dimensional port-Hamiltonian (pH) models that not only m
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
+
+## Citing
+If you use this project for academic work, please consider citing our
+[publication][arxiv-url]:
+
+    T. Holicki, J. Nicodemus, P. Schwerdtner, and B. Unger
+    Energy matching in reduced passive and port-Hamiltonian systems
+    ArXiv e-print 2309.05778, 2023.
 
 ## Installation
 This code base is using the [Julia Language](https://julialang.org/) and
@@ -47,10 +59,7 @@ using DrWatson
 ```
 which auto-activate the project and enable local path handling from DrWatson.
 
-
-<!-- USAGE EXAMPLES -->
 ## Usage
-
 The executable script `main.jl` is located in the `scripts` directory. 
 It performs the following steps:
 1. Set up a pH full order model and declare the methods (`Reductors` and (Energy-)`Matcher`) to run.
@@ -78,6 +87,10 @@ Benjamin Unger - benjamin.unger@simtech.uni-stuttgart.de
 
 Project Link: [https://github.com/Jonas-Nicodemus/ph-energy-matching][project-url]
 
+[doi-shield]: https://img.shields.io/badge/DOI-10.5281%20%2F%20zenodo.8335231-blue.svg?style=for-the-badge
+[doi-url]: https://doi.org/10.5281/zenodo.8335231
+[arxiv-shield]: https://img.shields.io/badge/arXiv-2204.13474-b31b1b.svg?style=for-the-badge
+[arxiv-url]: https://arxiv.org/abs/2309.05778
 [license-shield]: https://img.shields.io/github/license/Jonas-Nicodemus/ph-energy-matching.svg?style=for-the-badge
 [license-url]: https://github.com/Jonas-Nicodemus/ph-energy-matching/blob/main/LICENSE
 [project-url]:https://github.com/Jonas-Nicodemus/ph-energy-matching/

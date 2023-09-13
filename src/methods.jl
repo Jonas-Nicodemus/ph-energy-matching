@@ -31,7 +31,4 @@ em_prbt_cosmo_method = EnergyMatcher("em-prbt-cosmo", (fom, rom) -> EnergyMatchi
 em_prbt_mosek_method = EnergyMatcher("em-prbt-mosek", (fom, rom) -> EnergyMatching.matchnrg(fom, rom; solver=:Mosek), "\\textsf{EM-PRBT-MOSEK}", colors[7], markershapes[6], :dash)
 em_prbt_sedumi_method = EnergyMatcher("em-prbt-sedumi", (fom, rom) -> EnergyMatching.matchnrg(fom, rom; solver=:SeDuMi), "\\textsf{EM-PRBT-SeDuMi}", colors[8], markershapes[7], :dash)
 em_prbt_bfgs_method = EnergyMatcher("em-prbt-bfgs", (fom, rom) -> EnergyMatching.matchnrg(fom, rom; solver=:BFGS), "\\textsf{EM-PRBT}", colors[5], markershapes[5], :dash)
-em_prbt_bfgschol_method = EnergyMatcher("em-prbt-bfgs-chol", (fom, rom) -> EnergyMatching.matchnrg(fom, rom; solver=:BFGSchol), "\\textsf{EM-PRBT-Chol}", colors[6], markershapes[5], :dash)
-em_prbt_bfgs_paul_method = EnergyMatcher("em-prbt-bfgs-paul", (fom, r) -> pauls_roms(fom, r), "EM-PRBT-BFGS-Paul", colors[1], markershapes[1], :dash)
-
 

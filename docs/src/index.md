@@ -1,9 +1,14 @@
 # Energy matching in reduced passive and port-Hamiltonian systems
-
-Documentation for [ph-energy-matching](https://github.com/Jonas-Nicodemus/ph-energy-matching).
-
-This project contains the code for the paper Energy matching in reduced passive and port-Hamiltonian systems.
+This repository contains the code for the paper [Energy matching in reduced passive and port-Hamiltonian systems](https://arxiv.org/abs/2309.05778).
 The goal is to find low-dimensional port-Hamiltonian (pH) models that not only match the input-output dynamic of a full order model (FOM), but also its energy (Hamiltonian) trajectory.
+
+## Citing
+If you use this project for academic work, please consider citing our
+[publication](https://arxiv.org/abs/2309.05778):
+
+    T. Holicki, J. Nicodemus, P. Schwerdtner, and B. Unger
+    Energy matching in reduced passive and port-Hamiltonian systems
+    ArXiv e-print 2309.05778, 2023.
 
 ## Installation
 This code base is using the [Julia Language](https://julialang.org/) and
@@ -33,10 +38,7 @@ using DrWatson
 ```
 which auto-activate the project and enable local path handling from DrWatson.
 
-
-<!-- USAGE EXAMPLES -->
 ## Usage
-
 The executable script `main.jl` is located in the `scripts` directory. 
 It performs the following steps:
 1. Set up a pH full order model and declare the methods (`Reductors` and (Energy-)`Matcher`) to run.
@@ -60,7 +62,6 @@ This project contains four packages:
 - [QuadraticOutputSystems.jl](https://jonas-nicodemus.github.io/ph-energy-matching/dev/QuadraticOutputSystems/): Contains methods for the analysis of linear dynamical systems with quadratic output, as well as the `QuadraticOutputStateSpace` data type.
 
 ## License
-
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
