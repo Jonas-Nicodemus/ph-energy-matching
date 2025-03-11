@@ -62,8 +62,9 @@ which auto-activate the project and enable local path handling from DrWatson.
 ## Usage
 The executable script `main.jl` is located in the `scripts` directory. 
 It performs the following steps:
-1. Set up a pH full order model and declare the methods (`Reductors` and (Energy-)`Matcher`) to run.
-2. Run the methods.
+1. Set up the experiment.
+2. Apply minimal realization (Kalman-like decomposition).
+2. Declare and run the methods (`Reductors` and `EnergyMatcher`).
 3. Evaluate the ROMs.
 4. Analyze the results.
 
