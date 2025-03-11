@@ -1,22 +1,36 @@
-function kyp(Σ; kwargs...)
-    return prgram(Σ, :o; kwargs...)
+"""
+    X = kyp(Σ; kwargs...)
+
+Returns a solution to the KYP inequality by solving the corresponding linear matrix inequality.
+"""
+function kyp(Σ::StateSpace; kwargs...)
+    model = Model(() -> Hypatia.Optimizer(verbose = false))
+    for kwarg in keys(kwargs)
+        set_optimizer_attribute(model, String(kwarg), kwargs[kwarg])
+    end
+
+    @variable(model, X[1:Σ.nx, 1:Σ.nx], PSD)
+    @constraint(model, kypmat(Σ, X) in PSDCone())
+    optimize!(model)
+
+    return value.(X)
 end
 
 """
-    Xmin = kyp_min(Σ; kwargs...)
+    Xmin = kypmin(Σ; kwargs...)
 
 Returns the minimal solution to the KYP inequality by solveing the Riccati equation for the stabilizing solution.
 """
-function kyp_min(Σ; kwargs...)
+function kypmin(Σ; kwargs...)
     return prgram(Σ, :o; min=true, kwargs...)
 end
 
 """
-    Xmin = kyp_max(Σ; kwargs...)
+    Xmin = kypmax(Σ; kwargs...)
 
 Returns the maximal solution to the KYP inequality by solveing the Riccati equation for the anti-stabilizing solution.
 """
-function kyp_max(Σ; kwargs...)
+function kypmax(Σ; kwargs...)
     return prgram(Σ, :o; min=false, kwargs...)
 end
 

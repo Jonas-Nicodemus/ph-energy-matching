@@ -1,17 +1,15 @@
-import ControlSystems: StateSpace, ss
-
 """
     Σ = ss(J, R, Q, G, P, S, N)
     Σ = ss(Σph)
 
-Converts a `PortHamiltonianStateSpace` to a standard `ControlSystemsBase.StateSpace`.
+Converts a `PortHamiltonianStateSpace` to a standard `StateSpace`.
 """
-function ss(J, R, Q, G, P, S, N)
+function ControlSystemsBase.ss(J, R, Q, G, P, S, N)
     A, B, C, D = compose(J, R, Q, G, P, S, N)
     return ss(A, B, C, D)
 end
 
-function ss(Σph::PortHamiltonianStateSpace)
+function ControlSystemsBase.ss(Σph::PortHamiltonianStateSpace)
     return ss(Σph.J, Σph.R, Σph.Q, Σph.G, Σph.P, Σph.S, Σph.N)
 end
 
@@ -19,32 +17,17 @@ end
     Σph = phss(Σ)
     Σph = phss(Σ, X)
 
-Converts a `ControlSystemsBase.StateSpace` to a `PortHamiltonianStateSpace` by executing [`decompose`](@ref).
+Converts a `StateSpace` to a `PortHamiltonianStateSpace` by executing [`decompose`](@ref).
 If `X` is not provided, the minimal solution of the KYP inequality is used.
 """
-function phss(Σ::StateSpace)
-    X = kyp(Σ; min=true)
+function phss(Σ::StateSpace; kwargs...)
+    X = kypmin(Σ; kwargs...)
     return phss(Σ, X) 
 end
 
 function phss(Σ::StateSpace, X)
     J, R, Q, G, P, S, N = decompose(Σ.A, Σ.B, Σ.C, Σ.D, X)
     return phss(J, R, Q, G, P, S, N)
-end
-
-"""
-    Σqo = hdss(J, R, Q, G, P, S, N)
-    Σqo = hdss(Σph)
-
-Converts a `PortHamiltonianStateSpace` to a `QuadraticOutputSystem` (Hamiltonian dynamic).
-"""
-function hdss(J, R, Q, G, P, S, N)
-    A, B, _, _ = compose(J, R, Q, G, P, S, N)
-    return qoss(A, B, 1/2*Q)
-end
-
-function hdss(Σph::PortHamiltonianStateSpace)
-    return hdss(Σph.J, Σph.R, Σph.Q, Σph.G, Σph.P, Σph.S, Σph.N)
 end
 
 """
@@ -58,11 +41,15 @@ Composes the port-Hamiltonian matrices according to standard state-space matrice
     D = S - N.
 """
 function compose(J, R, Q, G, P, S, N)
-    A = (J - R) * Q
+    A = compose(J, R, Q)
     B = G - P
     C = (G + P)' * Q
     D = S - N
     return A, B, C, D
+end
+
+function compose(J, R, Q)
+    return (J - R) * Q
 end
 
 """
@@ -88,4 +75,3 @@ function decompose(A, B, C, D, X)
     N = skew(D)
     return J, R, Q, G, P, S, N
 end
-

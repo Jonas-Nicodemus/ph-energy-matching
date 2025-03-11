@@ -1,9 +1,6 @@
 using DrWatson, Test
 @quickactivate "ph-energy-matching"
 
-# Here you include files using `srcdir`
-# include(srcdir("file.jl"))
-
 # Run test suite
 println("Starting tests")
 ti = time()

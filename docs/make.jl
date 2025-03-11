@@ -1,7 +1,10 @@
+using DrWatson
+@quickactivate "ph-energy-matching"
 using Documenter
 
 using PortHamiltonianSystems, PortHamiltonianModelReduction, EnergyMatching, QuadraticOutputSystems
 
+@info "Building Documentation"
 makedocs(;
     modules=[PortHamiltonianSystems, PortHamiltonianModelReduction, EnergyMatching, QuadraticOutputSystems],
     authors="Jonas Nicodemus <jonas.nicodemus@icloud.com> and contributors",
@@ -16,14 +19,17 @@ makedocs(;
     pages=[
         "Home" => "index.md",
         "EnergyMatching" => "EnergyMatching.md",
-        "PortHamiltonianModelReduction" => "PortHamiltonianModelReduction.md",
-        "PortHamiltonianSystems" => "PortHamiltonianSystems.md",
         "QuadraticOutputSystems" => "QuadraticOutputSystems.md",
+        "PortHamiltonianSystems" => "PortHamiltonianSystems.md",
+        "PortHamiltonianModelReduction" => "PortHamiltonianModelReduction.md",   
         "API" => "API.md",
     ],
 )
 
+@info "Deploying Documentation"
 deploydocs(;
-    repo="github.com/Jonas-Nicodemus/ph-energy-matching",
+    repo="github.com/Jonas-Nicodemus/ph-energy-matching.git",
+    target = "build",
+    push_preview = true,
     devbranch="main",
 )

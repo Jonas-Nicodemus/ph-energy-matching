@@ -1,11 +1,11 @@
 """
     Σphr = bestricc(Σ::QuadraticOutputStateSpace, Σr::StateSpace; kwargs...)
     
-Solves the energy matching problem, by returning the best solution of the algebraic Riccati equation.
+Solves the energy matching problem using the best solution of the riccati equation.
 """
 function bestricc(Σ::QuadraticOutputStateSpace, Σr::StateSpace; kwargs...)
-    Xmin = kyp_min(Σr)
-    Xmax = kyp_max(Σr)
+    Xmin = kypmin(Σr)
+    Xmax = kypmax(Σr)
     
     Ar = Σr.A
     Br = Σr.B
@@ -14,15 +14,14 @@ function bestricc(Σ::QuadraticOutputStateSpace, Σr::StateSpace; kwargs...)
 
     Amin = Ar + Br * inv(-Dr - Dr') * (-Br' * Xmin + Cr)
     @assert all(real(eigvals(Amin)) .<= 0)
-    
     BVs = projectors(Amin)
     Δ = Xmin - Xmax
 
-    Σrmin = qoss(Ar, Br, 1/2*Xmin)
-    Σrmax = qoss(Ar, Br, 1/2*Xmax)
+    Σrmin = qoss(Ar, Br, 1/2*vec(Xmin)')
+    Σrmax = qoss(Ar, Br, 1/2*vec(Xmax)')
     
-    Vmin = norm(Σ - Σrmin)
-    Vmax = norm(Σ - Σrmax)
+    Vmin = h2norm(Σ - Σrmin)
+    Vmax = h2norm(Σ - Σrmax)
     
     Vstar = Inf
     Xstar = zero(Xmin)
@@ -37,8 +36,8 @@ function bestricc(Σ::QuadraticOutputStateSpace, Σr::StateSpace; kwargs...)
     for Z in combinations(BVs)
         P = Z * inv(Z' * Δ * Z) * Z' * Δ
         X = sym(Xmin * P + Xmax * (I - P))
-        Σqor = qoss(Σr.A, Σr.B, 0.5*X)
-        Vn =  norm(Σ - Σqor)
+        Σqor = qoss(Σr.A, Σr.B, 0.5*vec(X)')
+        Vn =  h2norm(Σ - Σqor)
         if Vn < Vstar
             Xstar .= X
             Vstar = Vn

@@ -1,20 +1,22 @@
 module PortHamiltonianSystems
 
-using LinearAlgebra, ControlSystems, MatrixEquations
-# using MATLAB
-using QuadraticOutputSystems
+using LinearAlgebra, ControlSystemsBase, MatrixEquations, VectorizationTransformations
+using JuMP, Hypatia
 
-export PortHamiltonianStateSpace, phss, hdss # types/PortHamiltonianStateSpace.jl
+export PortHamiltonianStateSpace, phss # types/PortHamiltonianStateSpace.jl
 export grampd, gram, prgrampd, prgram # gramians.jl
-export kyp, kypare, kypmat, kyp_min, kyp_max # kyp.jl
-export compose, decompose, dedescriptorize # convert.jl
-export sym, skew, project_psd # utils.jl
+export kyp, kypare, kypmat, kypmin, kypmax # kyp.jl
+export compose, decompose # convert.jl
+export sym, skew, project_psd, issym, isskew, ispsd # utils.jl
+export vech, unvech, unvec, duplication, sparsify! # utils.jl
+
+import ControlSystemsBase: to_matrix, AbstractNumOrArray
 
 include("types/PortHamiltonianStateSpace.jl")
-include("gramians.jl")
 include("analysis.jl")
-include("kyp.jl")
 include("convert.jl")
+include("gramians.jl")
+include("kyp.jl")
 include("utils.jl")
 
 end

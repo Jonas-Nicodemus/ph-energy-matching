@@ -1,6 +1,6 @@
 module PortHamiltonianModelReduction
 
-using LinearAlgebra, ControlSystems
+using LinearAlgebra, ControlSystemsBase
 using PortHamiltonianSystems
 
 export phirka, prbt, bt

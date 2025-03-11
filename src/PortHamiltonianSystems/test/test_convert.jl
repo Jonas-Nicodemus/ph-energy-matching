@@ -4,7 +4,7 @@ using Test
 
 using PortHamiltonianSystems
 
-using ControlSystems
+using ControlSystemsBase
 
 @testset "test_convert.jl" begin
 

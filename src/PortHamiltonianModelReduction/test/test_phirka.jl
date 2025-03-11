@@ -1,10 +1,10 @@
-module TestPHIRKA
+module Test_phirka
 
 using Test
 
 using PortHamiltonianModelReduction
 
-using LinearAlgebra, ControlSystems
+using LinearAlgebra, ControlSystemsBase
 using PortHamiltonianSystems
 
 @testset "test_phirka.jl" begin

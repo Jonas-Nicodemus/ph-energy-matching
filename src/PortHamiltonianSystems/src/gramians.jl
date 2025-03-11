@@ -1,4 +1,4 @@
-import ControlSystems: StateSpace, grampd, gram
+import ControlSystemsBase: StateSpace, grampd, gram
 
 """
     L = grampd(Σph, opt; kwargs...)
@@ -12,7 +12,7 @@ positive-real controllability or observability Gramian, respectively.
 function grampd(Σph::PortHamiltonianStateSpace, opt::Symbol; kwargs...)
     Σ = ss(Σph)
     if opt == :c || opt == :o
-        return ControlSystems.grampd(Σ, opt; kwargs...)
+        return ControlSystemsBase.grampd(Σ, opt; kwargs...)
     elseif opt == :pr_c
         return prgrampd(Σ, :c; kwargs...)
     elseif opt == :pr_o
@@ -34,7 +34,7 @@ positive-real controllability or observability Gramian, respectively (see [`prgr
 function gram(Σph::PortHamiltonianStateSpace, opt::Symbol; kwargs...)
     Σ = ss(Σph)
     if opt == :c || opt == :o
-        return ControlSystems.gram(Σ, opt; kwargs...)
+        return ControlSystemsBase.gram(Σ, opt; kwargs...)
     elseif opt == :pr_c
         return prgram(Σ, :c; kwargs...)
     elseif opt == :pr_o
@@ -51,7 +51,7 @@ Returns the positive-real Gramian of system `Σ`. If `opt` is `:c` or `:o`
 it returns the positive-real controllability or positive-real observability Gramian, respectively,
 by solving the corresponding positive-real algebraic Riccati equation (see [`prare`](@ref)).
 """
-function prgram(Σ::StateSpace, opt::Symbol; min=true, solver=:MatrixEquations)
+function prgram(Σ::StateSpace, opt::Symbol; min=true)
     if opt == :o
         A = Array(Σ.A)
         B = Array(Σ.B)
@@ -68,18 +68,8 @@ function prgram(Σ::StateSpace, opt::Symbol; min=true, solver=:MatrixEquations)
         error("opt must be either ':c' or ':o'")
     end
     
-    if solver == :MatrixEquations
-        X, _, _ = arec(A, B, R, Q, S, as=!min)
-    # elseif solver == :MATLAB
-    #     if min == true
-    #         X = mat"icare($A, $B, $Q, $R, $S);"
-    #     else
-    #         X = mat"icare($A, $B, $Q, $R, $S, 'anti');"
-    #     end
-    else
-        error("solver must be either ':MatrixEquations' or ':MATLAB'")
-    end
-
+    X, _, _ = arec(A, B, R, Q, S, as=!min)
+    
     return X
 end
 
@@ -99,14 +89,15 @@ it is projected to the set of positive semi-definite matrices calling [`project_
 """
 function prgrampd(Σ::StateSpace, opt::Symbol; kwargs...)
     X = prgram(Σ, opt; kwargs...)
-   
-    try
-        return cholesky(X).U
-    catch # in case X is not positive definite
-        @warn "Cholesky faild, since X is not positive definite, projecting to the nearest positive definite matrix"
-        X = project_psd(X, 1e-8)
-        return cholesky(X).U
-    end
+    
+    return cholesky(X; check=false).U
+    # try
+    #     return cholesky(X).U
+    # catch # in case X is not positive definite
+    #     @warn "Cholesky faild, since X is not positive definite, projecting to the nearest positive definite matrix"
+    #     X = project_psd(X; eigtol=1e-8)
+    #     return cholesky(X).U
+    # end
 end
 
 function prgrampd(Σph::PortHamiltonianStateSpace, opt::Symbol; kwargs...)

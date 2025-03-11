@@ -1,4 +1,5 @@
 import Base: +, -
+import ControlSystemsBase: StateSpace
 
 """
 PortHamiltonianStateSpace{T}
@@ -31,24 +32,48 @@ struct PortHamiltonianStateSpace{T}
     N::Matrix{T}
 end
 
+function PortHamiltonianStateSpace(J::AbstractNumOrArray, R::AbstractNumOrArray, Q::AbstractNumOrArray, 
+    G::AbstractNumOrArray, P::AbstractNumOrArray, S::AbstractNumOrArray, N::AbstractNumOrArray)
+    T = promote_type(eltype(J), eltype(R), eltype(Q), eltype(G), eltype(P), eltype(S), eltype(N))
+    return PortHamiltonianStateSpace{T}(to_matrix(T, J), to_matrix(T, R), to_matrix(T, Q), to_matrix(T, G), to_matrix(T, P), to_matrix(T, S), to_matrix(T, N))
+end
+
 """
     Σph = phss(J, R, Q, G, P, S, N)
+    Σph = phss(J, R, Q, G)
+    Σph = phss(Γ, W, Q)  
 
 Creates a port-Hamiltonian state-space model `Σph::PortHamiltonianStateSpace{T}`
 with matrix element type `T`.
 """
 phss(args...;kwargs...) = PortHamiltonianStateSpace(args...;kwargs...)
 
+function phss(J, R, Q, G)
+    return phss(J, R, Q, G, zeros(size(G,1), size(G,2)), zeros(size(G,2), size(G,2)), zeros(size(G,2), size(G,2)))
+end
+
+function phss(Γ, W, Q)
+    n = size(Q,1)
+    J = Γ[1:n, 1:n]
+    G = Γ[1:n, n+1:end]
+    N = Γ[n+1:end, n+1:end]
+
+    R = W[1:n, 1:n]
+    P = W[1:n, n+1:end]
+    S = W[n+1:end, n+1:end]
+    return phss(J, R, Q, G, P, S, N)
+end
+
 function -(sys1::PortHamiltonianStateSpace, sys2::PortHamiltonianStateSpace)
     return ss(sys1) - ss(sys2)
 end
 
-function -(sys1::ControlSystems.AbstractStateSpace, sys2::PortHamiltonianStateSpace)
-    return sys1 - ss(sys)
+function -(sys1::StateSpace, sys2::PortHamiltonianStateSpace)
+    return sys1 - ss(sys2)
 end
 
-function -(sys1::PortHamiltonianStateSpace, sys2::ControlSystems.AbstractStateSpace)
-    return ss(sys1) - ss(sys2)
+function -(sys1::PortHamiltonianStateSpace, sys2::StateSpace)
+    return ss(sys1) - sys2
 end
 
 _string_mat_with_headers(X) = _string_mat_with_headers(Matrix(X))

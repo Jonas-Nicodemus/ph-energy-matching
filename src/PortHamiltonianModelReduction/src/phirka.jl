@@ -15,6 +15,7 @@ function phirka(Σph::PortHamiltonianStateSpace, r, num_runs; tol=1e-3, max_iter
         if h2ᵢ < h2
             h2 = h2ᵢ
             Σphr = Σphrᵢ
+            @debug "Found a better rom with h2 = $h2"
         end
     end
 
@@ -26,10 +27,6 @@ end
     Σr = phirka(Σph::PortHamiltonianStateSpace, r; tol=1e-3, max_iter=50)
 
 Reduces the state dimension of the port-Hamiltonian system `Σph` to `r` using the iterative rational Krylov algorithm.
-
-**S. Gugercin, R. V. Polyuga, C. Beattie, and A. van der Schaft.**
-[Structure-preserving tangential interpolation for model reduction of port-{Hamiltonian} systems](https://doi.org/10.1016/j.automatica.2012.05.052).
-Automatica J. IFAC, 48(9):1963--1974, 2012.
 """
 function phirka(Σph::PortHamiltonianStateSpace, r; tol=1e-3, max_iter=50)
     Σ = ss(Σph)
@@ -68,12 +65,6 @@ function interpolation_data(A, B)
     return s, b
 end
 
-# function interpolation_data(A, B)
-#     Λ, v = eigen(A')
-#     b = transpose(v' * B)
-#     return -Λ, b
-# end
-
 function interpolate(A, B, Q, s, b)
     V = construct_V(A, B, s, b)
     W = construct_W(V, Q)
@@ -100,7 +91,6 @@ function construct_V(A, B, s, b)
         end
     end
 
-    #  Orthonormalizing => worse results
     V = qr(V).Q[:,1:r]
     return V
 end
@@ -120,8 +110,8 @@ end
 
 function project(Σph, V, W)
     Jr = W' * Σph.J * W
-    Rr = W' * Σph.R * W
-    Qr = V' * Σph.Q * V
+    Rr = hermitianpart(W' * Σph.R * W)
+    Qr = hermitianpart(V' * Σph.Q * V)
     Gr = W' * Σph.G
     Pr = W' * Σph.P
     

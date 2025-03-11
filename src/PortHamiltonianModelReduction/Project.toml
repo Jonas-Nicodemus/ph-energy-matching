@@ -4,10 +4,11 @@ authors = ["Jonas Nicodemus <jonas.nicodemus@icloud.com> and contributors"]
 version = "1.0.0-DEV"
 
 [deps]
-ControlSystems = "a6e380b2-a6ca-5380-bf3e-84a91bcd477e"
+ControlSystemsBase = "aaaaaaaa-a6ca-5380-bf3e-84a91bcd477e"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 PortHamiltonianSystems = "6ff9205f-2186-4c35-b9d7-b7843b877754"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
+ControlSystemsBase = "1.14.5"
 julia = "1"

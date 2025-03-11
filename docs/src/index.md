@@ -1,6 +1,6 @@
 # Energy matching in reduced passive and port-Hamiltonian systems
 This repository contains the code for the paper [Energy matching in reduced passive and port-Hamiltonian systems](https://arxiv.org/abs/2309.05778).
-The goal is to find low-dimensional port-Hamiltonian (pH) models that not only match the input-output dynamic of a full order model (FOM), but also its energy (Hamiltonian) trajectory.
+The goal is to obtain low-dimensional port-Hamiltonian (pH) models that effectively approximate both the input-output dynamics and the energy (Hamiltonian) of a full-order model (FOM).
 
 ## Citing
 If you use this project for academic work, please consider citing our
@@ -41,18 +41,11 @@ which auto-activate the project and enable local path handling from DrWatson.
 ## Usage
 The executable script `main.jl` is located in the `scripts` directory. 
 It performs the following steps:
-1. Set up a pH full order model and declare the methods (`Reductors` and (Energy-)`Matcher`) to run.
-2. Run the methods.
+1. Set up the experiment.
+2. Apply minimal realization (Kalman-like decomposition).
+2. Declare and run the methods (`Reductors` and `EnergyMatcher`).
 3. Evaluate the ROMs.
 4. Analyze the results.
-
-Note that for the exact reproduction of the results in the paper for the poroelasticity model, 
-the solution of the positive-real algebraic Riccati equation from MATLAB's `icare` is required.
-
-This requires a running version of MATLAB and the package [MATLAB.jl](https://github.com/JuliaInterop/MATLAB.jl).
-Then you need to uncomment
-- the `using MATLAB` line in `src/PortHamiltonianSystems/PortHamiltonianSystems.jl`.
-- in the `prgram` function in `src/PortHamiltonianSystems/gramians.jl`, the MATLAB related lines must be uncommented.
 
 ## Project structure 
 This project contains four packages:
